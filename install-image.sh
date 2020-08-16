@@ -3,9 +3,9 @@
 
 # Conf
 webdir="/var/www/html/"
-container="apachephp73"
-image="apache-php73"
-vhost="php73.local"
+container="apachephp74"
+image="apache-php74"
+vhost="php74.local"
 
 # Init images
 docker stop $container

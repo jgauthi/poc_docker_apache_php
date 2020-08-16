@@ -1,4 +1,4 @@
-FROM php:7.3-apache
+FROM php:7.4-apache
 MAINTAINER Jgauthi <github.com/jgauthi>
 
 VOLUME ["/var/www"]
