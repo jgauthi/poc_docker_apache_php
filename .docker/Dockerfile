@@ -1,18 +1,16 @@
-FROM orsolin/docker-php-5.3-apache
+FROM php:5.6-apache
 MAINTAINER Jgauthi <github.com/jgauthi>
 
 VOLUME ["/var/www"]
 
-# Install composer
+# https://github.com/mlocati/docker-php-extension-installer
+ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensions \
+	gd \
+	mysqli pdo pdo_mysql
+
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
     mv composer.phar /usr/local/bin/composer
 
-COPY apache_default.conf /etc/apache2/sites-available/default
-COPY run.sh /usr/local/bin/run
-RUN chmod +x /usr/local/bin/run
-RUN usermod -u 1000 www-data
+COPY apache_default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
-
-WORKDIR /var/www/html
-EXPOSE 80
-CMD ["/usr/local/bin/run"]

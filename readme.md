@@ -9,16 +9,16 @@ A Docker image based on Ubuntu, serving PHP 5 or 7 running as Apache Module. Use
 You can choose the php version with [tags](https://github.com/jgauthi/poc_docker_apache_php/tags). Then, you can the configuration on "conf section" on file install-image.sh.
 
 ```shell script
-chmod +x install-image.sh .docker/run.sh
+chmod +x install-image.sh
 ./install-image.sh
 ```
 
 Get the current docker IP with the command: 
 ```shell script
-docker inspect apachephp53 | grep '"IPAddress": "'
+docker inspect apachephp56 | grep '"IPAddress": "'
 ```
 
-And edit your /etc/hosts: `172.17.X.X php53.local`
+And edit your /etc/hosts: `172.17.X.X php56.local`
 
 **Installed packages:**
 * Ubuntu Server 12, based on ubuntu docker image
@@ -43,20 +43,23 @@ And edit your /etc/hosts: `172.17.X.X php53.local`
   * display_errors = On
   * error_reporting = E_ALL (default, overridable per env variable)
 
-For uninstall, you can use the command: `docker rm apachephp53`
+For uninstall, you can use the command: `docker rm apachephp56`
 
 
 ## Usage
 
 ```shell script
 # Start container
-docker start apachephp53
+docker start apachephp56
+
+# Use composer
+docker exec -it apachephp56 composer install
 
 # Stop container
-docker stop apachephp53
+docker stop apachephp56
 ```
 
-You can check on url: http://php53.local
+You can check on url: http://php56.local
 
 **Access apache logs**: 
 Apache is configured to log both access and error log to STDOUT. So you can simply use `docker logs` to get the log output:

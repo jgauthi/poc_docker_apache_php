@@ -3,9 +3,9 @@
 
 # Conf
 webdir="/var/www/html/"
-container="apachephp53"
-image="apache-php53"
-vhost="php53.local"
+container="apachephp56"
+image="apache-php56"
+vhost="php56.local"
 
 # Init images
 docker stop $container
@@ -21,6 +21,11 @@ docker create -P \
     -e PHP_ERROR_REPORTING='E_ALL & ~E_STRICT' \
     $image
 
-docker start $container && docker ps
+docker start $container
+if [ -f "$webdir/composer.json" ]; then
+    docker exec -it $container composer install
+fi
+
+docker ps
 # echo "[Docker] Nouveau container disponible: ${container}"
 # echo "Pour lancer: docker start ${container}"
