@@ -15,10 +15,10 @@ chmod +x install-image.sh
 
 Get the current docker IP with the command: 
 ```shell script
-docker inspect apachephp56 | grep '"IPAddress": "'
+docker inspect apachephp72 | grep '"IPAddress": "'
 ```
 
-And edit your /etc/hosts: `172.17.X.X php56.local`
+And edit your /etc/hosts: `172.17.X.X php72.local`
 
 **Installed packages:**
 * Ubuntu Server 12, based on ubuntu docker image
@@ -43,23 +43,23 @@ And edit your /etc/hosts: `172.17.X.X php56.local`
   * display_errors = On
   * error_reporting = E_ALL (default, overridable per env variable)
 
-For uninstall, you can use the command: `docker rm apachephp56`
+For uninstall, you can use the command: `docker rm apachephp72`
 
 
 ## Usage
 
 ```shell script
 # Start container
-docker start apachephp56
+docker start apachephp72
 
 # Use composer
-docker exec -it apachephp56 composer install
+docker exec -it apachephp72 composer install
 
 # Stop container
-docker stop apachephp56
+docker stop apachephp72
 ```
 
-You can check on url: http://php56.local
+You can check on url: http://php72.local
 
 **Access apache logs**: 
 Apache is configured to log both access and error log to STDOUT. So you can simply use `docker logs` to get the log output:
