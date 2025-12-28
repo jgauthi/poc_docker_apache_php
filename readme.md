@@ -1,65 +1,43 @@
-# Docker Apache + PHP
-A Docker image based on Ubuntu, serving PHP 5 or 7 running as Apache Module. Useful for Web developers in need for a fixed PHP version. In addition, the `error_reporting` setting in php.ini is configurable per container via environment variable.
+# POC Project Apache/PHP with docker
+Provide an dev environnement for Apache and php with a specific version. 
 
-## Prerequisite
 
-* [Docker](https://docs.docker.com/get-docker/) v18+
+## Prerequisites
+
+* Docker v28+ & Docker compose v2.4+
+* `Make` command. On linux, install with `sudo apt install build-essential`. On Windows, [see here](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows/54086635).
+* These ports must be available for docker: `8000` _(you can change it on `.docker/apachephp/app.yml` or create a `docker-compose.override.yml` file after install)_.
+
 
 ## Installation
-You can choose the php version with [tags](https://github.com/jgauthi/poc_docker_apache_php/tags). Then, you can the configuration on "conf section" on file install-image.sh.
+Put your project files on **demo** folder _(you can rename if you edit docker/*/.yml files)_, or you can your folder as a git repository instead. You can edit [.env](./.env) files on `COMPOSE_FILE` variable for add additionals docker compose config files (splitted by a comma `,`).
 
-```shell script
-chmod +x install-image.sh
-./install-image.sh
+Exemple:
+```env
+COMPOSE_FILE=.docker/apachephp/app.yml,.docker/database/mysql.yml,.docker/database/phpmyadmin.yml
+#...
 ```
 
-Get the current docker IP with the command: 
-```shell script
-docker inspect apachephp74 | grep '"IPAddress": "'
+Once prepare, use command lines:
+
+```bash
+make install
 ```
 
-And edit your /etc/hosts: `172.17.X.X php74.local`
-
-**Installed packages:**
-* Ubuntu Server 12, based on ubuntu docker image
-* apache2
-* php
-* php-cli
-* libapache2-mod-php
-* php-curl
-* php-ftp
-* php-gd
-* php-mbstring
-* php-mysql, php-myqsli
-* php-soap
-* php-zlib
-* composer (php package manager)
-
-
-**Default Configurations**:
-
-* Apache: .htaccess-Enabled in webroot (mod_rewrite with AllowOverride all)
-* php.ini:
-  * display_errors = On
-  * error_reporting = E_ALL (default, overridable per env variable)
-
-For uninstall, you can use the command: `docker rm apachephp74`
+The `Makefile` can be completed: if you use a Symfony Project --> uncomment some lines.
 
 
 ## Usage
+Use docker for execute the built-in web server and access the application in your browser at <http://localhost:8000>:
 
-```shell script
-# Start container
-docker start apachephp74
+```bash
+make up
 
-# Use composer
-docker exec -it apachephp74 composer install
+# For stop services
+make stop
 
-# Stop container
-docker stop apachephp74
+# Help: List command
+make
 ```
 
-You can check on url: http://php74.local
-
-**Access apache logs**: 
-Apache is configured to log both access and error log to STDOUT. So you can simply use `docker logs` to get the log output:
+Enjoy!
