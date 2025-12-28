@@ -17,14 +17,15 @@ Exemple:
 COMPOSE_FILE=.docker/apachephp/app.yml,.docker/database/mysql.yml,.docker/database/phpmyadmin.yml
 
 # [Optional] You can set php version, recommanded: 7.4, 8.4+
-APP_PORT=APP_PORT
 PHP_VERSION=8.4
 
 # [Optional] php5 support, recommanded: 5.6
 PHP_VERSION=5.6
 XDEBUG_CONFIG_FILE=98-xdebug-php5.ini
 
-#...
+# [Optional] Anothers docker settings, look at .env for complete list
+APP_PORT=8000
+RESTART_POLICY=on-failure
 ```
 
 Once prepare, use command lines:

@@ -12,3 +12,4 @@ services:
       - ./${XDEBUG_CONFIG_FILE:-98-xdebug.ini}:${PHP_INI_DIR}/98-xdebug.ini
       - ./99-custom-php-conf.ini:${PHP_INI_DIR}/99-custom-php-conf.ini
       - ./apache_default.conf:${APACHE_CONF_DIR}/000-default.conf
+    restart: ${RESTART_POLICY:-no}
