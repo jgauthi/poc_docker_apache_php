@@ -17,6 +17,7 @@ Exemple:
 COMPOSE_FILE=.docker/apachephp/app.yml,.docker/database/mysql.yml,.docker/database/phpmyadmin.yml
 
 # [Optional] You can set php version, recommanded: 7.4, 8.4+
+APP_PORT=APP_PORT
 PHP_VERSION=8.4
 
 # [Optional] php5 support, recommanded: 5.6

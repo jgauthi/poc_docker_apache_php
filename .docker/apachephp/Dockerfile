@@ -23,7 +23,7 @@ RUN if [ "$(echo $PHP_VERSION | cut -d. -f1)" = "5" ]; then \
 
 # Installation des outils, configuration du fuseau horaire ET des locales
 RUN apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated \
-    nano curl locales apt-utils supervisor tzdata \
+    nano curl locales apt-utils tzdata \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && echo "${LANG} UTF-8" >> /etc/locale.gen && locale-gen \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo "${TZ}" > /etc/timezone \
