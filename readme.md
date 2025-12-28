@@ -6,7 +6,7 @@ Provide an dev environnement for Apache and php with a specific version.
 
 * Docker v28+ & Docker compose v2.4+
 * `Make` command. On linux, install with `sudo apt install build-essential`. On Windows, [see here](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows/54086635).
-* These ports must be available for docker: `8000` _(you can change it on `.docker/apachephp/app.yml` or create a `docker-compose.override.yml` file after install)_.
+* These ports must be available for docker: `8000, 9003` _(you can change it on `.docker/apachephp/app.yml` or create a `docker-compose.override.yml` file after install)_.
 
 
 ## Installation
@@ -15,6 +15,14 @@ Put your project files on **demo** folder _(you can rename if you edit docker/*/
 Exemple:
 ```env
 COMPOSE_FILE=.docker/apachephp/app.yml,.docker/database/mysql.yml,.docker/database/phpmyadmin.yml
+
+# [Optional] You can set php version, recommanded: 7.4, 8.4+
+PHP_VERSION=8.4
+
+# [Optional] php5 support, recommanded: 5.6
+PHP_VERSION=5.6
+XDEBUG_CONFIG_FILE=98-xdebug-php5.ini
+
 #...
 ```
 

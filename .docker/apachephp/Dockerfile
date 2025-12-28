@@ -1,4 +1,6 @@
-FROM php:8.4-apache
+ARG PHP_VERSION
+FROM php:${PHP_VERSION}-apache
+
 LABEL maintainer="J.GAUTHI <github.com/jgauthi>"
 
 ENV \
@@ -11,8 +13,16 @@ ENV \
     USER_APACHE=www-data \
     WORKDIR=/var/www/project/demo
 
+# Gestion des dépôts archives pour les vieilles versions (ex: PHP 5.6 sur Debian Jessie/Stretch)
+RUN if [ "$(echo $PHP_VERSION | cut -d. -f1)" = "5" ]; then \
+    echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list && \
+    echo "Acquire::Check-Valid-Until false;" > /etc/apt/apt.conf.d/99no-check-valid-until && \
+    echo "APT::Get::AllowUnauthenticated true;" > /etc/apt/apt.conf.d/99allow-unauthenticated; \
+    fi
+
 # Installation des outils, configuration du fuseau horaire ET des locales
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated \
     nano curl locales apt-utils supervisor tzdata \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && echo "${LANG} UTF-8" >> /etc/locale.gen && locale-gen \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \

@@ -1,11 +1,14 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        - PHP_VERSION=${PHP_VERSION:-8.4}
     ports:
       - "8000:80"
     volumes:
       - ../../demo:/var/www/project/demo
       # - ./97-memcached.ini:${PHP_INI_DIR}/97-memcached.ini
-      - ./98-xdebug.ini:${PHP_INI_DIR}/98-xdebug.ini
+      - ./${XDEBUG_CONFIG_FILE:-98-xdebug.ini}:${PHP_INI_DIR}/98-xdebug.ini
       - ./99-custom-php-conf.ini:${PHP_INI_DIR}/99-custom-php-conf.ini
       - ./apache_default.conf:${APACHE_CONF_DIR}/000-default.conf
