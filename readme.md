@@ -50,7 +50,7 @@ make stop
 make
 ```
 
-Enjoy!
+Enjoy <http://localhost:8000> !
 
 
 ## [Bonus] Access to host database
@@ -80,3 +80,22 @@ FLUSH PRIVILEGES;
 ```
 
 Uncomment and edit settings `DB_*` in [.env](./env), keep `DB_HOST` with the configured value.
+
+
+## [Optional bonus] Url [project].localhost instead localhost:[PORT]
+This project can use the local Apache server as a lightweight reverse proxy to route custom `.localhost` domains (e.g. `project.localhost`) to Docker containers.  
+This allows clean, port-free URLs in the browser without relying on Traefik or modifying the system hosts file.
+The setup is intended for local development only and keeps Docker networking simple while preserving a realistic domain-based workflow.
+
+```shell
+project=demo
+
+sudo cp $(pwd)/.docker/apachephp/apache_proxy.conf /etc/apache2/sites-available/${project}.conf
+# edit /etc/apache2/sites-available/[project].conf
+# ServerName: [ProjectNAME].localhost
+# ProxyPass/ProxyPassReverse: PORT used in apache docker
+
+sudo a2ensite ${project}.conf && sudo a2enmod proxy proxy_http && sudo service apache2 restart
+```
+
+Enjoy <http://demo.localhost> !
