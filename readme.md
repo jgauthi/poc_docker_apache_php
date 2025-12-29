@@ -51,3 +51,32 @@ make
 ```
 
 Enjoy!
+
+
+## [Bonus] Access to host database
+You can use your local database for this docker service:
+
+```bash
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+# Edit values:
+# bind-address = 0.0.0.0
+# collation-server = utf8mb4_unicode_ci
+# character-set-server = utf8mb4
+#
+# For php5 version:
+# default-authentication-plugin = mysql_native_password
+```
+
+A configured mysql user is required (or psgql equivalent):
+```sql
+# PHP5
+CREATE USER IF NOT EXISTS 'dockeruser'@'%' IDENTIFIED WITH mysql_native_password BY 'passdocker';
+
+# Recent php
+CREATE USER IF NOT EXISTS 'dockeruser'@'%' IDENTIFIED BY 'passdocker';
+
+GRANT ALL PRIVILEGES ON dbname.* TO 'dockeruser'@'%';
+FLUSH PRIVILEGES;
+```
+
+Uncomment and edit settings `DB_*` in [.env](./env), keep `DB_HOST` with the configured value.
